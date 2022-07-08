@@ -6,7 +6,8 @@ ruby "3.1.2"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "jsbundling-rails"
-gem 'jsonapi.rb'
+gem "jsonapi.rb"
+gem "paper_trail"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rack-cors"
