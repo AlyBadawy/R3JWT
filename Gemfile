@@ -6,12 +6,14 @@ ruby "3.1.2"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "jsbundling-rails"
+gem 'jsonapi.rb'
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rack-cors"
 gem "rails", "~> 7.0.3"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "ransack"
 
 group :development, :test do
   gem 'capybara'

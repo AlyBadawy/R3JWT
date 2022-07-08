@@ -119,6 +119,11 @@ GEM
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
     json (2.6.2)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
+    jsonapi.rb (2.0.0)
+      jsonapi-serializer
+      rack
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -196,6 +201,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (3.2.1)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -275,12 +284,14 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jsbundling-rails
+  jsonapi.rb
   pg (~> 1.1)
   pry-byebug
   pry-rails
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.3)
+  ransack
   rspec-rails
   rubocop
   rubocop-config-prettier
