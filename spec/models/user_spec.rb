@@ -22,9 +22,9 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:username).is_at_most(15) }
   end
 
-  # describe "associations" do
-  #   it { is_expected.to have_many(:sessions) }
-  # end
+  describe "associations" do
+    it { is_expected.to have_many(:logins) }
+  end
 
   describe "secure password" do
     before do

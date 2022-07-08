@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_paper_trail
   has_secure_password
 
+  has_many :logins
+
   validates :email, presence: true,
                     format: /\A\S+@\S+\z/,
                     uniqueness: { case_sensitive: false }
