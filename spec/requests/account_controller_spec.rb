@@ -25,8 +25,8 @@ RSpec.describe AccountController, type: :request do
         expect(parsed_body["data"]["type"]).to eq("user")
         expect(parsed_body["data"]["attributes"]).to eq(
           { "username" => "user-test",
-            "email"    => "test1@example2.com",
-            "admin"    => false }
+            "email" => "test1@example2.com",
+            "admin" => false }
         )
       end
     end
@@ -57,6 +57,7 @@ RSpec.describe AccountController, type: :request do
   end
 
   describe "DELETE /account" do
+    context "with valid jwt"
     it "returns http success" do
       delete "/api/account"
       expect(response).to have_http_status(:success)
