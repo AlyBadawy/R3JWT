@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:logins) }
+    it { is_expected.to have_many(:sessions) }
   end
 
   describe "secure password" do

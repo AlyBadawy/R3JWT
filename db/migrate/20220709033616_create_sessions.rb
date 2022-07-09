@@ -1,6 +1,6 @@
-class CreateLogins < ActiveRecord::Migration[7.0]
+class CreateSessions < ActiveRecord::Migration[7.0]
   def change
-    create_table :logins, id: :uuid do |t|
+    create_table :sessions, id: :uuid do |t|
       t.belongs_to :user, null: false, foreign_key: true, type: :uuid
       t.string :refresh_token_digest, null: false
       t.string :ip

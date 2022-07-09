@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_08_152240) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_033616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "logins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "refresh_token_digest", null: false
     t.string "ip"
@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_152240) do
     t.boolean "logged_out", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_logins_on_user_id"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -47,5 +47,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_152240) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "logins", "users"
+  add_foreign_key "sessions", "users"
 end

@@ -1,15 +1,15 @@
 module TokenHelper
   module_function
 
-  def payload_from_login(login)
-    data = { user_id: login.user.id, username: login.user.username }
-    exp = Time.now.to_i + ENV.fetch("TOKEN_EXPIRY").to_i
+  def payload_from_session(session)
+    data = { user_id: session.user.id, username: session.user.username }
+    exp = Time.zone.now.to_i + ENV.fetch("TOKEN_EXPIRY").to_i
     iss = ENV.fetch("TOKEN_ISSUER")
-    jti = login.id
+    jti = session.id
     { data: data, exp: exp, iss: iss, jti: jti }
   end
 
-  def encode_payload(payload)
+  def jwt_from_payload(payload)
     JWT.encode(
       payload,
       ENV.fetch("HMAC_SECRET"),
@@ -18,48 +18,48 @@ module TokenHelper
     )
   end
 
-  def valid_jti(jti)
-    login = Login.find_by(id: jti)
-    return login unless login&.logged_out
+  def session_from_valid_jti(jti)
+    session = Session.find_by(id: jti)
+    return session unless session&.logged_out
 
     nil
   end
 
-  def valid_refresh_token(token, refresh_token)
-    jti = validate_expired_token(token).first["jti"]
-    login = valid_jti(jti).authenticate_refresh_token(refresh_token)
-    return login if login && login.updated_at + ENV.fetch("REFRESH_TOKEN_EXPIRY") >= Time.now
+  def session_from_valid_refresh_token(jwt, refresh_token)
+    jti = decode_expired_token(jwt).first["jti"]
+    session = session_from_valid_jti(jti)&.authenticate_refresh_token(refresh_token)
+    return session if session && session.updated_at + ENV.fetch("REFRESH_TOKEN_EXPIRY") >= Time.zone.now
 
     nil
   end
 
-  def decode_token(token)
+  def decode_token(jwt)
     JWT.decode(
-      token,
+      jwt,
       ENV.fetch("HMAC_SECRET"),
       true,
       {
-        iss: ENV.fetch("TOKEN_ISSUER"),
-        verify_iss: true,
+        iss:               ENV.fetch("TOKEN_ISSUER"),
+        verify_iss:        true,
         verify_expiration: true,
-        verify_jti: proc { |jti| valid_jti(jti) },
-        algorithm: ENV.fetch("HMAC_ALGO"),
-        exp_leeway: 120,
+        verify_jti:        proc { |jti| session_from_valid_jti(jti) },
+        algorithm:         ENV.fetch("HMAC_ALGO"),
+        exp_leeway:        120,
       }
     )
   end
 
-  def validate_expired_token(token)
+  def decode_expired_token(jwt)
     JWT.decode(
-      token,
+      jwt,
       ENV.fetch("HMAC_SECRET"),
       true,
       {
-        iss: ENV.fetch("TOKEN_ISSUER"),
-        verify_iss: true,
+        iss:               ENV.fetch("TOKEN_ISSUER"),
+        verify_iss:        true,
         verify_expiration: false,
-        verify_jti: proc { |jti| valid_jti(jti) },
-        algorithm: ENV.fetch("HMAC_ALGO"),
+        verify_jti:        proc { |jti| session_from_valid_jti(jti) },
+        algorithm:         ENV.fetch("HMAC_ALGO"),
       }
     )
   end
