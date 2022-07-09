@@ -3,15 +3,15 @@ module JwtExceptionHandler
 
   included do
     rescue_from JWT::ExpiredSignature do
-      json_response({ errors: ["Expired Token. Refresh Token or login again"] }, :unauthorized)
+      render json: { errors: ["Expired Token. Refresh Token or login again"] }, status: :unauthorized
     end
 
     rescue_from JWT::EncodeError do
-      json_response({ errors: ["can't generate Token. Please login again"] }, :unauthorized)
+      render json: { errors: ["can't generate Token. Please login again"] }, status: :unauthorized
     end
 
     rescue_from JWT::DecodeError do
-      json_response({ errors: ["Invalid Token. Please login again"] }, :unauthorized)
+      render json: { errors: ["Invalid Token. Please login again"] }, status: :unauthorized
     end
   end
 end
