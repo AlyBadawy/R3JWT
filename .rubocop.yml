@@ -115,7 +115,7 @@ Layout/EmptyLineBetweenDefs:
 
 Layout/EmptyLinesAroundAccessModifier:
   Enabled: true
-  EnforcedStyle: only_before
+  EnforcedStyle: around
 
 Layout/HashAlignment:
   Enabled: true
