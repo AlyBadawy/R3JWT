@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
 
     login_data = AuthHelper.login(username, password, ip, user_agent)
 
-    response.headers["access-token"] = login_data[:jwt]
-    response.headers["refresh-token"] = login_data[:refresh_token]
-    response.headers["expire-at"] = login_data[:exp]
+    response.headers["Access-Token"] = login_data[:jwt]
+    response.headers["Refresh-Token"] = login_data[:refresh_token]
+    response.headers["Expire-At"] = login_data[:exp]
   end
 
   def update
