@@ -25,8 +25,8 @@ RSpec.describe AccountController, type: :request do
         expect(parsed_body["data"]["type"]).to eq("user")
         expect(parsed_body["data"]["attributes"]).to eq(
           { "username" => "user-test",
-            "email" => "test1@example2.com",
-            "admin" => false }
+            "email"    => "test1@example2.com",
+            "admin"    => false }
         )
       end
     end
