@@ -70,7 +70,7 @@ RSpec.describe "/users", type: :request do
         expect {
           post users_url,
                params: { user: invalid_attributes }, as: :json
-        }.to change(User, :count).by(0)
+        }.not_to change(User, :count)
       end
 
       it "renders a JSON response with errors for the new user" do

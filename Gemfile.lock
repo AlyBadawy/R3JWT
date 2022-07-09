@@ -124,6 +124,7 @@ GEM
     jsonapi.rb (2.0.0)
       jsonapi-serializer
       rack
+    jwt (2.4.1)
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -290,6 +291,7 @@ DEPENDENCIES
   faker
   jsbundling-rails
   jsonapi.rb
+  jwt
   paper_trail
   pg (~> 1.1)
   pry-byebug

@@ -17,10 +17,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_152240) do
 
   create_table "logins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.string "refresh_token", null: false
+    t.string "refresh_token_digest", null: false
     t.string "ip"
     t.string "user_agent"
-    t.string "jwt", null: false
     t.boolean "logged_out", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
