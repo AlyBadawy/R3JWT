@@ -3,7 +3,10 @@ require "rails_helper"
 RSpec.describe SessionsController, type: :request do
   before(:each) do
     @user = create(:user, username: "test-user", password: "password123")
-    @login_data = AuthHelper.login("test-user", "password123") # This creates a session
+    @login_data = AuthHelper.login("test-user",
+                                   "password123",
+                                   Faker::Internet.ip_v4_address,
+                                   "user-agent-1") # This creates a session
     @jwt = @login_data[:jwt]
     @sessions = create_list(:session, 5, user: @user)
   end
@@ -95,6 +98,52 @@ RSpec.describe SessionsController, type: :request do
   end
 
   describe "PUT /api/sessions" do
+    context "with valid attributes" do
+      it "doesn't create a new Sessions" do
+        expect {
+          put "/api/sessions",
+              headers: { 'User-Agent': "user-agent-1" },
+              params: { 'Access-Token':  @login_data[:jwt],
+                        'Refresh-Token': @login_data[:refresh_token] }, as: :json
+        }.not_to change(Session, :count)
+      end
+
+      it "renders required headers" do
+        put "/api/sessions",
+            headers: { 'User-Agent': "user-agent-1" },
+            params: { 'Access-Token':  @login_data[:jwt],
+                      'Refresh-Token': @login_data[:refresh_token] }, as: :json
+
+        expect(response.header).to have_key("Access-Token")
+        expect(response.header).to have_key("Refresh-Token")
+        expect(response.header).to have_key("Expire-At")
+      end
+
+      it "doesn't return any content" do
+        put "/api/sessions",
+            headers: { 'User-Agent': "user-agent-1" },
+            params: { 'Access-Token':  @login_data[:jwt],
+                      'Refresh-Token': @login_data[:refresh_token] }, as: :json
+        expect(response).to have_http_status(:no_content)
+        expect(response.body).to eq ""
+      end
+    end
+
+    context "with invalid user agent" do
+      it "returns a 401 Unauthorized status" do
+        put "/api/sessions", headers: { 'User-Agent': "invalid-user-agent" },
+                             params: { 'Access-Token':  @login_data[:jwt],
+                                       'Refresh-Token': @login_data[:refresh_token] }, as: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "with invalid attributes" do
+      it "returns a 401 Unauthorized status" do
+        put "/api/sessions", params: { 'Access-Token': "invalid", 'Refresh-Token': "invalid" }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 
   describe "DELETE /api/sessions/:id", type: :request do
