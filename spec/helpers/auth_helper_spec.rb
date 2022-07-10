@@ -32,29 +32,60 @@ RSpec.describe AuthHelper, type: :helper do
 
   describe "#refresh" do
     before(:each) do
-      @data = described_class.login("valid_user_1", "password123")
+      @data = described_class.login("valid_user_1",
+                                    "password123",
+                                    Faker::Internet.ip_v4_address)
     end
 
     context "with valid credentials" do
       it "returns valid login information" do
-        new_data = described_class.refresh(@data[:jwt], @data[:refresh_token])
+        new_data = described_class.refresh(@data[:jwt],
+                                           @data[:refresh_token],
+                                           Faker::Internet.ip_v4_address)
         expect(new_data).to have_key(:jwt)
         expect(new_data).to have_key(:refresh_token)
         expect(new_data).to have_key(:exp)
       end
 
       it "doesn't create a new record in the Session table" do
-        expect { described_class.refresh(@data[:jwt], @data[:refresh_token]) }.not_to change(Session, :count)
+        expect {
+          described_class.refresh(@data[:jwt],
+                                  @data[:refresh_token],
+                                  Faker::Internet.ip_v4_address)
+        }.not_to change(Session, :count)
+      end
+    end
+
+    context "with valid credentials and wrong user_agent" do
+      it "raises exception and logs out session" do
+        current_sesssion = Session.last
+        expect(current_sesssion.logged_out).to be_falsey
+        expect {
+          described_class.refresh(@data[:jwt],
+                                  @data[:refresh_token],
+                                  Faker::Internet.ip_v4_address,
+                                  "Invalid User-agent")
+        }.to raise_error("AuthHelper::ExpiredToken")
+        current_sesssion.reload
+        expect(current_sesssion.logged_out).to be_truthy
       end
     end
 
     context "with invalid credentials" do
       it "raises an exception for invalid JWT" do
-        expect { described_class.refresh("invalid", @data[:refresh_token]) }.to raise_error(JWT::DecodeError)
+        expect {
+          described_class.refresh("invalid",
+                                  @data[:refresh_token],
+                                  Faker::Internet.ip_v4_address)
+        }.to raise_error(JWT::DecodeError)
       end
 
       it "raises an exception for invalid Refresh Token" do
-        expect { described_class.refresh(@data[:jwt], "invalid") }.to raise_error(AuthHelper::WrongCredentials)
+        expect {
+          described_class.refresh(@data[:jwt],
+                                  "invalid",
+                                  Faker::Internet.ip_v4_address)
+        }.to raise_error(AuthHelper::WrongCredentials)
       end
     end
   end

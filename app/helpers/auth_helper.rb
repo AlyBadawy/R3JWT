@@ -21,14 +21,19 @@ module AuthHelper
     { jwt: jwt, refresh_token: refresh_token, exp: payload[:exp] }
   end
 
-  def refresh(jwt, refresh_token)
+  def refresh(jwt, refresh_token, ip, user_agent = "unknown_agent")
     session = TokenHelper.session_from_valid_refresh_token(jwt, refresh_token)
     raise WrongCredentials unless session
+
+    if session.user_agent != user_agent
+      session.update(logged_out: true)
+      raise ExpiredToken
+    end
 
     refresh_token = SecureRandom.hex(32)
     payload = TokenHelper.payload_from_session session
     jwt = TokenHelper.jwt_from_payload payload
-    session.update(refresh_token: refresh_token)
+    session.update(refresh_token: refresh_token, ip: ip)
 
     { jwt: jwt, refresh_token: refresh_token, exp: payload[:exp] }
   end

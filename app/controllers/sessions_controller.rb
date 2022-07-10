@@ -28,6 +28,16 @@ class SessionsController < ApplicationController
   end
 
   def update
+    jwt = params["Access-Token"]
+    refresh_token = params["Refresh-Token"]
+    ip = request.ip
+    user_agent = request.user_agent
+
+    login_data = AuthHelper.refresh(jwt, refresh_token, ip, user_agent)
+
+    response.headers["Access-Token"] = login_data[:jwt]
+    response.headers["Refresh-Token"] = login_data[:refresh_token]
+    response.headers["Expire-At"] = login_data[:exp]
   end
 
   def destroy

@@ -15,7 +15,7 @@ RSpec.describe SessionsController, type: :routing do
     end
 
     it "routes to #update" do
-      expect(put: "/api/sessions/1").to route_to("sessions#update", id: "1")
+      expect(put: "/api/sessions").to route_to("sessions#update")
     end
 
     it "routes to #destroy" do
