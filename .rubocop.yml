@@ -192,6 +192,9 @@ RSpec/HookArgument:
   Enabled: false
 RSpec/InstanceVariable:
   Enabled: false
+RSpec/NestedGroups:
+  Enabled: true
+  Max: 5
 
 RSpec/MultipleExpectations:
   Enabled: true
