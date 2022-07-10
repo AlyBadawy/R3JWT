@@ -4,6 +4,7 @@ RSpec.describe AuthHelper, type: :helper do
   before(:each) do
     create(:user, username: "valid_user_1", password: "password123")
   end
+
   describe "#login" do
     context "with valid credentials" do
       it "returns valid login information" do
