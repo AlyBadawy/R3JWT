@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
+  prepend_before_action :authenticate_user!, only: %i[index show destroy]
+
   def index
+    @sessions = @current_user.sessions
+    render jsonapi: @sessions, include: [:user]
   end
 
   def show
@@ -22,5 +26,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    if params[:id] == "current"
+      @current_session.update(logged_out: true)
+    else
+      @session = Session.find(params[:id])
+      @session&.update(logged_out: true)
+      render jsonapi: @session
+    end
   end
 end
