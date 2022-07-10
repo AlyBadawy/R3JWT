@@ -46,7 +46,7 @@ RSpec.describe AccountController, type: :request do
 
   describe "PUT /account" do
     it "returns http success" do
-      get "/api/account"
+      put "/api/account"
       expect(response).to have_http_status(:success)
     end
   end
