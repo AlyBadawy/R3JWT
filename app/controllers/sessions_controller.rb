@@ -29,9 +29,9 @@ class SessionsController < ApplicationController
     if params[:id] == "current"
       @current_session.update(logged_out: true)
     else
-      @session = Session.find_by(id: params[:id])
-      @session.update(logged_out: true)
-      render jsonapi: @session, include: [:user]
+      @session = Session.find(params[:id])
+      @session&.update(logged_out: true)
+      render jsonapi: @session
     end
   end
 end

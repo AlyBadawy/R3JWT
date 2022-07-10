@@ -46,4 +46,44 @@ RSpec.describe SessionsController, type: :request do
       end
     end
   end
+
+  describe "DELETE /api/sessions/:id", type: :request do
+    context "with valid JWT Token and session id" do
+      it "returns a success HTTP status" do
+        create(:user, username: "test-user", password: "password123")
+        login_data = AuthHelper.login("test-user", "password123")
+        jwt = login_data[:jwt]
+        delete "/api/sessions/current", headers: { Authorization: "Bearer #{jwt}" }
+        expect(response).to have_http_status(:success)
+      end
+
+      it "marks the session as logged out" do
+        user = create(:user, username: "test-user", password: "password123")
+        login_data = AuthHelper.login("test-user", "password123")
+        session = user.sessions.last
+        expect(session.logged_out).to be_falsey
+        jwt = login_data[:jwt]
+        delete "/api/sessions/#{session.id}", headers: { Authorization: "Bearer #{jwt}" }
+        session.reload
+        expect(session.logged_out).to be_truthy
+      end
+    end
+
+    context "with valid JWT and invalid session Id" do
+      it "returns a 404 record not found error" do
+        create(:user, username: "test-user", password: "password123")
+        login_data = AuthHelper.login("test-user", "password123")
+        jwt = login_data[:jwt]
+        delete "/api/sessions/invlaid_id", headers: { Authorization: "Bearer #{jwt}" }
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "with invalid JWT token" do
+      it "returns a 401 Unauthorized status" do
+        delete "/api/sessions/current", headers: { Authorization: "Bearer invalid-token" }
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  end
 end
