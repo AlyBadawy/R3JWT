@@ -7,6 +7,11 @@ class SessionsController < ApplicationController
   end
 
   def show
+    if params[:id] == "current"
+      render jsonapi: @current_session
+    else
+      render jsonapi: current_user.sessions.find(params[:id])
+    end
   end
 
   def create
