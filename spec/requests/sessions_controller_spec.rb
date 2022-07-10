@@ -94,7 +94,7 @@ RSpec.describe SessionsController, type: :request do
     end
   end
 
-  describe "PUT /api/sessions/current" do
+  describe "PUT /api/sessions" do
   end
 
   describe "DELETE /api/sessions/:id", type: :request do
