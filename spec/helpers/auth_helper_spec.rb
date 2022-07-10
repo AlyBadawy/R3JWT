@@ -32,7 +32,7 @@ RSpec.describe AuthHelper, type: :helper do
 
   describe "#refresh" do
     before(:each) do
-      @data = described_class.login("valid_user_1", "password123")
+      @data = described_class.login("valid_user_1", "password123", Faker::Internet.ip_v4_address)
     end
 
     context "with valid credentials" do
@@ -46,6 +46,11 @@ RSpec.describe AuthHelper, type: :helper do
       it "doesn't create a new record in the Session table" do
         expect { described_class.refresh(@data[:jwt], @data[:refresh_token]) }.not_to change(Session, :count)
       end
+    end
+
+    context "with valid credentials and wrong user_agent" do
+      it "logs out session"
+      it "raises an error"
     end
 
     context "with invalid credentials" do

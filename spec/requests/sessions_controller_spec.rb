@@ -94,6 +94,9 @@ RSpec.describe SessionsController, type: :request do
     end
   end
 
+  describe "PUT /api/sessions/current" do
+  end
+
   describe "DELETE /api/sessions/:id", type: :request do
     context "with valid JWT Token and session id" do
       it "returns a success HTTP status" do

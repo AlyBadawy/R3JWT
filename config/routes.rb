@@ -4,9 +4,12 @@ Rails.application.routes.draw do
     put "account", to: "account#update" # update account info
     delete "account", to: "account#destroy" # delete account
 
+    resources :sessions, except: [:update]
+    put "sessions", to: "sessions#update"
+
     resources :users
-    resources :sessions
   end
+
   root "react#index", as: :react_index
   get "*path", to: "react#index"
 end
