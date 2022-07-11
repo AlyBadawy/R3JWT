@@ -16,11 +16,18 @@ PreCommit:
   BundleCheck:
     enabled: true
   EsLint:
-    enabled: false
+    enabled: true
     # https://github.com/sds/overcommit/issues/338
     required_executable: 'yarn'
     command: ['yarn', 'eslint']
     flags: []
+    include:
+      [
+        'app/javascript/**/*.ts',
+        'app/javascript/**/*.tsx',
+        'app/javascript/**/*.js',
+        'app/javascript/**/*.js',
+      ]
 
   Fasterer:
     enabled: true
