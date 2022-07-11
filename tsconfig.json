@@ -8,5 +8,6 @@
     "skipLibCheck": true,
     "jsx": "react"
   },
-  "exclude": ["node_modules", "app/assets/builds", "**/*.test.ts"]
+  "exclude": ["node_modules", "app/assets/builds", "**/*.test.ts"],
+  "types": ["node", "jest", "@testing-library/jest-dom"]
 }
