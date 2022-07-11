@@ -5,34 +5,34 @@
     "jest": true
   },
   "extends": [
-    "eslint:recommended",
+    "airbnb-typescript",
     "prettier",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "prettier-react",
     "plugin:react-hooks/recommended"
   ],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
+
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": false
     },
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
+    "react/no-unescaped-entities": 0,
+    "react/destructuring-assignment": [0, "never"],
+    "react/sort-comp": [0, "never"],
+    "react/jsx-props-no-spreading": 0,
+    "react/prop-type": 0,
     "react/require-default-props": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/label-has-for": 0,
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_" }
