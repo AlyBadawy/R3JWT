@@ -3,7 +3,7 @@ module JwtAuthenticatable
 
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
-  attr_reader :current_session, :current_user
+  attr_accessor :current_session, :current_user
 
   # Use this to raise an error and automatically respond with a 401 HTTP status
   # code when API key authentication fails
@@ -17,8 +17,6 @@ module JwtAuthenticatable
 
   private
 
-  attr_writer :current_session, :current_user
-
   def user_authenticator(jwt_token)
     decoded_token = TokenHelper.decode_token(jwt_token)
     jti = decoded_token.first["jti"]
@@ -29,7 +27,7 @@ module JwtAuthenticatable
   end
 
   def admin_authenticator(jwt_token)
-    return false unless user_authenticator(jwt_token)&.admin
+    raise AuthHelper::RestrictedAccessError unless user_authenticator(jwt_token)&.admin
 
     @current_session&.user
   end
