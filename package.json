@@ -22,10 +22,12 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^26.5.3",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-testing-library": "^5.5.1",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "react-test-renderer": "^18.1.0",
@@ -34,6 +36,14 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
-    "ts-check": "tsc --project tsconfig.json --noEmit --watch --preserveWatchOutput"
+    "typecheck": "tsc --project tsconfig.json --noEmit --preserveWatchOutput",
+    "typecheck:watch": "tsc --project tsconfig.json --noEmit --watch --preserveWatchOutput",
+    "lint": "eslint --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern app/javascript/**/*",
+    "lint:fix": "eslint --fix --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern app/javascript/**/*",
+    "brakeman": "brakeman -o log/brakeman.out",
+    "stylelint": "stylelint app/**/*.s[ac]ss",
+    "stylelint:fix": "stylelint --fix app/**/*.s[ac]ss",
+    "test": "jest --silent",
+    "test:all": "yarn typecheck && yarn lint && yarn brakeman && bundle exec rspec && yarn test"
   }
 }

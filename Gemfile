@@ -8,12 +8,14 @@ gem "bootsnap", require: false
 gem "jsbundling-rails"
 gem "jsonapi.rb"
 gem "jwt"
+gem "lograge"
 gem "paper_trail"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rack-cors"
 gem "rails", "~> 7.0.3"
 gem "ransack"
+gem "solargraph"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
