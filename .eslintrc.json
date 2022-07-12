@@ -26,6 +26,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint"],
   "rules": {
+    "no-console": "error",
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
