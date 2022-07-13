@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.lograge.enabled = true
+  config.lograge.enabled = false
 
   config.lograge.base_controller_class = ["ActionController::API", "ActionController::Base"]
 

@@ -2,10 +2,15 @@
   "name": "app",
   "private": "true",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.3",
     "esbuild": "^0.14.48",
+    "esbuild-sass-plugin": "^2.2.6",
     "eslint": "^8.0.1",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "sass": "^1.53.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.17.10",
@@ -35,14 +40,14 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "build": "esbuild react-src/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
     "typecheck": "tsc --project tsconfig.json --noEmit --preserveWatchOutput",
     "typecheck:watch": "tsc --project tsconfig.json --noEmit --watch --preserveWatchOutput",
-    "lint": "eslint --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern app/javascript/**/*",
-    "lint:fix": "eslint --fix --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern app/javascript/**/*",
+    "lint": "eslint --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern ./react-src/**/*",
+    "lint:fix": "eslint --fix --quiet --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern ./react-src/**/*",
     "brakeman": "brakeman -o log/brakeman.out",
-    "stylelint": "stylelint app/**/*.s[ac]ss",
-    "stylelint:fix": "stylelint --fix app/**/*.s[ac]ss",
+    "stylelint": "stylelint react-src/**/*.s[ac]ss",
+    "stylelint:fix": "stylelint --fix react-src/**/*.s[ac]ss",
     "test": "jest --silent",
     "test:all": "yarn typecheck && yarn lint && yarn brakeman && bundle exec rspec && yarn test"
   }

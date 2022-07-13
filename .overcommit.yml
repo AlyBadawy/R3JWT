@@ -23,10 +23,10 @@ PreCommit:
     flags: []
     include:
       [
-        'app/javascript/**/*.ts',
-        'app/javascript/**/*.tsx',
-        'app/javascript/**/*.js',
-        'app/javascript/**/*.js',
+        'react-src/**/*.ts',
+        'react-src/**/*.tsx',
+        'react-src/**/*.js',
+        'react-src/**/*.js',
       ]
 
   Fasterer:
