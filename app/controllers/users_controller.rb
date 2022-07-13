@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
-  before_action :authenticate_user!
+  before_action :authenticate_admin!
   # GET /users
   def index
     @users = User.all
@@ -10,10 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    # render jsonapi: @user
-    
-   
-    render json: current_user
+    render jsonapi: @user
   end
 
   # POST /users
@@ -55,9 +52,5 @@ class UsersController < ApplicationController
 
   def serialized_params
     jsonapi_deserialize(params, only: [:username, :email, :password, :password_confirmation])
-  end
-
-  def hi
-    "heloooo!!!!!!!!!!!!!!!!!!!!!!!"
   end
 end
