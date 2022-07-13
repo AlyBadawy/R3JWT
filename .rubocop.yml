@@ -22,35 +22,35 @@ inherit_gem:
 Bundler/DuplicatedGem:
   Enabled: true
   Include:
-    - "**/*.gemfile"
-    - "**/Gemfile"
-    - "**/gems.rb"
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
 
 Bundler/GemComment:
   Enabled: false
   Include:
-    - "**/*.gemfile"
-    - "**/Gemfile"
-    - "**/gems.rb"
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
   IgnoredGems: []
   OnlyFor: []
 
 Bundler/GemFilename:
   Enabled: true
-  EnforcedStyle: "Gemfile"
+  EnforcedStyle: 'Gemfile'
   Include:
-    - "**/Gemfile"
-    - "**/gems.rb"
-    - "**/Gemfile.lock"
-    - "**/gems.locked"
+    - '**/Gemfile'
+    - '**/gems.rb'
+    - '**/Gemfile.lock'
+    - '**/gems.locked'
 
 Bundler/GemVersion:
   Enabled: false
-  EnforcedStyle: "required"
+  EnforcedStyle: 'required'
   Include:
-    - "**/*.gemfile"
-    - "**/Gemfile"
-    - "**/gems.rb"
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
   AllowedGems: []
 
 Bundler/OrderedGems:
@@ -58,9 +58,9 @@ Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
   ConsiderPunctuation: false
   Include:
-    - "**/*.gemfile"
-    - "**/Gemfile"
-    - "**/gems.rb"
+    - '**/*.gemfile'
+    - '**/Gemfile'
+    - '**/gems.rb'
 
 #################### Layout ###########################
 
@@ -136,6 +136,10 @@ Layout/MultilineMethodCallIndentation:
 
 Layout/SpaceAroundEqualsInParameterDefault:
   Enabled: true
+
+Lint/Debugger:
+  Enabled: true
+  Severity: error
 
 #################### Metrics ##########################
 

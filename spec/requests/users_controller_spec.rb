@@ -176,9 +176,6 @@ RSpec.describe UsersController, type: :request do
     describe "GET /index" do
       it "returns a 403 Forbidden status" do
         get users_url, headers: @user_headers, as: :json
-
-        binding.pry
-
         expect(response).to have_http_status :forbidden
       end
     end
