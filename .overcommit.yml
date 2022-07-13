@@ -1,0 +1,98 @@
+PostCheckout:
+  BundleInstall:
+    enabled: true
+
+PreCommit:
+  ALL:
+    problem_on_unmodified_line: warn
+    requires_files: true
+    required: false
+    quiet: false
+  AuthorName:
+    enabled: false
+  BundleAudit:
+    enabled: true
+    flags: ['--update']
+  BundleCheck:
+    enabled: true
+  EsLint:
+    enabled: true
+    # https://github.com/sds/overcommit/issues/338
+    required_executable: 'yarn'
+    command: ['yarn', 'eslint']
+    flags: []
+    include:
+      [
+        'app/javascript/**/*.ts',
+        'app/javascript/**/*.tsx',
+        'app/javascript/**/*.js',
+        'app/javascript/**/*.js',
+      ]
+
+  Fasterer:
+    enabled: true
+    exclude:
+      - 'vendor/**/*.rb'
+      - 'db/schema.rb'
+  ForbiddenBranches:
+    enabled: true
+    branch_patterns: ['main']
+  HamlLint:
+    enabled: true
+  MergeConflicts:
+    enabled: true
+    exclude:
+      - '**/conflict/file_spec.rb'
+      - '**/git/conflict/parser_spec.rb'
+  # prettier? https://github.com/sds/overcommit/issues/614 https://github.com/sds/overcommit/issues/390#issuecomment-495703284
+  Prettier:
+    enabled: true
+    command: ['npx', 'prettier']
+    flags: ['-c']
+    description: 'Ensure Prettier is used to format JS'
+    include:
+      - '**/*.js*'
+      - '**/*.ts*'
+      - '**/*.json'
+  RuboCop:
+    enabled: true
+  #    on_warn: fail # Treat all warnings as failures
+  ScssLint:
+    enabled: true
+  MarkdownLint:
+    enabled: true
+    description: 'Lint documentation for Markdown errors'
+    required_executable: 'node_modules/.bin/markdownlint'
+    flags: ['--config', '.markdownlint.yml', 'doc/**/*.md']
+    install_command: 'yarn install'
+    include:
+      - 'doc/**/*.md'
+  Vale:
+    enabled: true
+    description: 'Lint documentation for grammatical and formatting errors'
+    required_executable: 'vale'
+    flags: ['--config', '.vale.ini', '--minAlertLevel', 'error', 'doc']
+    install_command: 'brew install vale # (or use another package manager)'
+    include:
+      - 'doc/**/*.md'
+PrePush:
+  # Unit & Integration TEST
+  RSpec:
+    enabled: true
+    command: ['bundle', 'exec', 'rspec', 'spec']
+    on_warn: fail
+  BundleInstall:
+    enabled: true
+    on_warn: fail
+
+CommitMsg:
+  TextWidth:
+    enabled: true
+    min_subject_width: 8 # three 2-letter words with 2 spaces
+    max_subject_width: 72
+    quiet: false
+
+  EmptyMessage:
+    enabled: true
+    required: true
+    description: 'Checking for empty commit message'

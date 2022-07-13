@@ -21,11 +21,11 @@ RSpec.describe AuthHelper, type: :helper do
 
     context "with invalid credentials" do
       it "raises exception for invalid username" do
-        expect { described_class.login("invalid", "password123") }.to raise_error(AuthHelper::WrongCredentials)
+        expect { described_class.login("invalid", "password123") }.to raise_error(AuthHelper::WrongCredentialsError)
       end
 
       it "raises exception for invalid password" do
-        expect { described_class.login("valid_user_1", "invalid") }.to raise_error(AuthHelper::WrongCredentials)
+        expect { described_class.login("valid_user_1", "invalid") }.to raise_error(AuthHelper::WrongCredentialsError)
       end
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe AuthHelper, type: :helper do
                                   @data[:refresh_token],
                                   Faker::Internet.ip_v4_address,
                                   "Invalid User-agent")
-        }.to raise_error("AuthHelper::ExpiredToken")
+        }.to raise_error("AuthHelper::ExpiredTokenError")
         current_sesssion.reload
         expect(current_sesssion.logged_out).to be_truthy
       end
@@ -85,7 +85,7 @@ RSpec.describe AuthHelper, type: :helper do
           described_class.refresh(@data[:jwt],
                                   "invalid",
                                   Faker::Internet.ip_v4_address)
-        }.to raise_error(AuthHelper::WrongCredentials)
+        }.to raise_error(AuthHelper::WrongCredentialsError)
       end
     end
   end
