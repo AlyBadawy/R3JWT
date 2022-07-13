@@ -1,18 +1,17 @@
 Rails.application.configure do
   config.lograge.enabled = true
 
-  config.lograge.base_controller_class = ['ActionController::API', 'ActionController::Base']
+  config.lograge.base_controller_class = ["ActionController::API", "ActionController::Base"]
 
   config.lograge.custom_payload do |controller|
     {
       host:       controller.request.host,
-      user_id:    controller.current_user&.id,
-      session_id: controller.current_session&.id,
+      user_id:    controller.current_user.try(:id),
+      session_id: controller.current_session.try(:id),
       remote_ip:  controller.request.remote_ip,
       request_id: controller.request.request_id,
     }
   end
-  
 
   config.lograge.custom_options = lambda do |event|
     return { event_payload: "null" } unless event.payload
@@ -26,6 +25,5 @@ Rails.application.configure do
       session_id: event.payload[:session_id],
       params:     event.payload[:params],
     }
-
   end
 end

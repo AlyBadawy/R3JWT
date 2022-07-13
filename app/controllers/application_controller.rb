@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
 
   def jsonapi_meta(resources)
     meta = { provider: ENV.fetch("API_PROVIDER") }
-    meta[:total] = resources.count if resources.respond_to?(:count)
+    meta[:total] = resources.respond_to?(:count) ? resources.count : 1
 
     meta
   end
