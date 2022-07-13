@@ -137,6 +137,8 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceAroundEqualsInParameterDefault:
   Enabled: true
 
+###################### Lint ###########################
+
 Lint/Debugger:
   Enabled: true
   Severity: error
