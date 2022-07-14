@@ -16,3 +16,5 @@ export const AuthApi = appApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useLoginMutation } = AuthApi;
