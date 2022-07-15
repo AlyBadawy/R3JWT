@@ -34,19 +34,3 @@ const authSlice = createSlice({
 
 export const { setCredentials, logOut } = authSlice.actions;
 export default authSlice.reducer;
-
-// import { IUser } from '../../types/IUser';
-
-// export const authSlice = createSlice({
-//   name: 'authSlice',
-//   initialState,
-//   reducers: {
-//     logOut: () => initialState,
-//     userInfo: (state, action: PayloadAction<AuthState>) => {
-//       state.user = action.payload.user;
-//     },
-//   },
-// });
-
-// export const { logOut, userInfo } = authSlice.actions;
-// export default authSlice.reducer;

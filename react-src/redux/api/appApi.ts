@@ -1,10 +1,12 @@
-import { BaseQueryApi } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
-import { RootState } from '../store';
 import {
   createApi,
   FetchArgs,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+
+import { BaseQueryApi } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+
+import { RootState } from '../store';
 import { setCredentials, logOut } from '../slices/authSlice';
 
 const baseQuery = fetchBaseQuery({

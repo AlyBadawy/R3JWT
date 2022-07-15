@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const Public = () => {
+export const Home = () => {
   const content = (
     <section>
       <header>

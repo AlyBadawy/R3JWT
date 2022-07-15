@@ -1,24 +1,24 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
-  before_action :authenticate_admin!
+  # before_action :authenticate_admin!
   # GET /users
   def index
     @users = User.all
 
-    render jsonapi: @users
+    render json: @users
   end
 
   # GET /users/1
   def show
-    render jsonapi: @user
+    render json: @user
   end
 
   # POST /users
   def create
-    @user = User.new(serialized_params)
+    @user = User.new(user_params)
 
     if @user.save
-      render jsonapi: @user, status: :created, location: @user
+      render json: @user, status: :created, location: @user
     else
       render jsonapi_errors: @user.errors, status: :unprocessable_entity
     end
@@ -26,10 +26,10 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/ -1
   def update
-    if @user.update(serialized_params)
-      render jsonapi: @user
+    if @user.update(user_params)
+      render json: @user
     else
-      render jsonapi_errors: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
